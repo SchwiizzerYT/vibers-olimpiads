@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Profil - Vibers Olimpiads{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-user-circle"></i> Mening Profilim</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-info">
+                <h2>{{ user.full_name }}</h2>
+                <p class="profile-role">
+                    {% if user.role == 'admin' %}<span class="badge-admin">Admin</span>
+                    {% else %}<span class="badge-user">Foydalanuvchi</span>{% endif %}
+                </p>
+                <div class="profile-details">
+                    <div class="detail-row">
+                        <i class="fas fa-user"></i>
+                        <span>Username: <strong>{{ user.username }}</strong></span>
+                    </div>
+                    <div class="detail-row">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email: <strong>{{ user.email }}</strong></span>
+                    </div>
+                    <div class="detail-row">
+                        <i class="fas fa-calendar"></i>
+                        <span>Ro'yxatdan o'tgan: <strong>{{ user.created_at }}</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

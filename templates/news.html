@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Yangiliklar - Vibers Olimpiads{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-newspaper"></i> Yangiliklar</h1>
+        <p>Olimpiadlar haqida so'nggi xabarlar va e'lonlar</p>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        {% if news %}
+        <div class="news-list">
+            {% for n in news %}
+            <div class="news-item">
+                <div class="news-date-big">
+                    <span class="day">{{ n.date.split('-')[2] }}</span>
+                    <span class="month">
+                        {% set months = ['', 'Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyn', 'Iyl', 'Avg', 'Sen', 'Okt', 'Noy', 'Dek'] %}
+                        {{ months[n.date.split('-')[1]|int] }}
+                    </span>
+                </div>
+                <div class="news-body">
+                    <h3>{{ n.title }}</h3>
+                    <p>{{ n.content }}</p>
+                    <div class="news-meta">
+                        <span><i class="fas fa-user"></i> {{ n.author }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ n.date }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-newspaper"></i>
+            <h3>Yangiliklar hali yo'q</h3>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

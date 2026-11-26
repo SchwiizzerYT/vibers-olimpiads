@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Panel{% endblock %} - Vibers Olimpiads</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-trophy"></i>
+                <div>
+                    <span class="logo-main">Vibers</span>
+                    <span class="logo-sub">Admin Panel</span>
+                </div>
+            </div>
+            <button class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div>
+                <div class="sidebar-username">{{ session.get('full_name') }}</div>
+                <div class="sidebar-role">Administrator</div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-label">Asosiy</span>
+                <a href="{{ url_for('admin_dashboard') }}" class="nav-item {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </div>
+            <div class="nav-section">
+                <span class="nav-label">Boshqarish</span>
+                <a href="{{ url_for('admin_olympiads') }}" class="nav-item {% if 'olympiad' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-medal"></i> Olimpiadalar
+                </a>
+                <a href="{{ url_for('admin_results') }}" class="nav-item {% if 'result' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-chart-bar"></i> Natijalar
+                </a>
+                <a href="{{ url_for('admin_news') }}" class="nav-item {% if 'news' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-newspaper"></i> Yangiliklar
+                </a>
+                <a href="{{ url_for('admin_users') }}" class="nav-item {% if 'user' in request.endpoint %}active{% endif %}">
+                    <i class="fas fa-users"></i> Foydalanuvchilar
+                </a>
+            </div>
+            <div class="nav-section">
+                <span class="nav-label">Sayt</span>
+                <a href="{{ url_for('index') }}" class="nav-item" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Saytni Ko'rish
+                </a>
+                <a href="{{ url_for('logout') }}" class="nav-item nav-danger">
+                    <i class="fas fa-sign-out-alt"></i> Chiqish
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="admin-main" id="adminMain">
+        <!-- Top Bar -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="breadcrumb-admin">
+                    <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+                    {% block breadcrumb %}{% endblock %}
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-time" id="topbarTime"></div>
+                <a href="{{ url_for('index') }}" class="topbar-btn" title="Saytni ko'rish">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <a href="{{ url_for('logout') }}" class="topbar-btn topbar-btn-danger" title="Chiqish">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="admin-flash">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'danger' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                    {{ message }}
+                    <button onclick="this.parentElement.remove()">×</button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Page Content -->
+        <div class="admin-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>

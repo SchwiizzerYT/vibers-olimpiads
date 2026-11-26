@@ -1,0 +1,106 @@
+{% extends 'admin/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block breadcrumb %} / Dashboard{% endblock %}
+{% block content %}
+<div class="page-title">
+    <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+    <p>Vibers Olimpiads boshqaruv paneli</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="stats-grid">
+    <div class="stat-card blue">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+            <div class="stat-num">{{ stats.users }}</div>
+            <div class="stat-label">Foydalanuvchilar</div>
+        </div>
+        <a href="{{ url_for('admin_users') }}" class="stat-link">Ko'rish <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="stat-card green">
+        <div class="stat-icon"><i class="fas fa-medal"></i></div>
+        <div class="stat-info">
+            <div class="stat-num">{{ stats.olympiads }}</div>
+            <div class="stat-label">Jami Olimpiadalar</div>
+        </div>
+        <a href="{{ url_for('admin_olympiads') }}" class="stat-link">Ko'rish <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="stat-card orange">
+        <div class="stat-icon"><i class="fas fa-fire"></i></div>
+        <div class="stat-info">
+            <div class="stat-num">{{ stats.active }}</div>
+            <div class="stat-label">Faol Olimpiadalar</div>
+        </div>
+        <a href="{{ url_for('admin_olympiads') }}" class="stat-link">Ko'rish <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="stat-card purple">
+        <div class="stat-icon"><i class="fas fa-chart-bar"></i></div>
+        <div class="stat-info">
+            <div class="stat-num">{{ stats.results }}</div>
+            <div class="stat-label">Natijalar</div>
+        </div>
+        <a href="{{ url_for('admin_results') }}" class="stat-link">Ko'rish <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-actions">
+    <h2>Tezkor Harakatlar</h2>
+    <div class="actions-grid">
+        <a href="{{ url_for('admin_add_olympiad') }}" class="action-btn">
+            <i class="fas fa-plus-circle"></i>
+            <span>Olimpiad Qo'shish</span>
+        </a>
+        <a href="{{ url_for('admin_add_result') }}" class="action-btn">
+            <i class="fas fa-trophy"></i>
+            <span>Natija Kiritish</span>
+        </a>
+        <a href="{{ url_for('admin_add_news') }}" class="action-btn">
+            <i class="fas fa-newspaper"></i>
+            <span>Yangilik Qo'shish</span>
+        </a>
+        <a href="{{ url_for('admin_users') }}" class="action-btn">
+            <i class="fas fa-users-cog"></i>
+            <span>Foydalanuvchilar</span>
+        </a>
+    </div>
+</div>
+
+<!-- Info Panel -->
+<div class="admin-info-row">
+    <div class="info-panel">
+        <h3><i class="fas fa-info-circle"></i> Tizim Ma'lumotlari</h3>
+        <div class="info-list">
+            <div class="info-item">
+                <span>Sayt nomi:</span>
+                <strong>Vibers Olimpiads</strong>
+            </div>
+            <div class="info-item">
+                <span>Admin username:</span>
+                <strong>admin_1336</strong>
+            </div>
+            <div class="info-item">
+                <span>Jami yangiliklar:</span>
+                <strong>{{ stats.news }}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="info-panel">
+        <h3><i class="fas fa-link"></i> Sahifalar</h3>
+        <div class="info-list">
+            <div class="info-item">
+                <a href="{{ url_for('index') }}" target="_blank"><i class="fas fa-home"></i> Bosh sahifa</a>
+            </div>
+            <div class="info-item">
+                <a href="{{ url_for('olympiads') }}" target="_blank"><i class="fas fa-medal"></i> Olimpiadalar</a>
+            </div>
+            <div class="info-item">
+                <a href="{{ url_for('results') }}" target="_blank"><i class="fas fa-chart-bar"></i> Natijalar</a>
+            </div>
+            <div class="info-item">
+                <a href="{{ url_for('news') }}" target="_blank"><i class="fas fa-newspaper"></i> Yangiliklar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

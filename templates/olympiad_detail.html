@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %}{{ olympiad.title }} - Vibers Olimpiads{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('index') }}">Bosh sahifa</a> /
+            <a href="{{ url_for('olympiads') }}">Olimpiadalar</a> /
+            <span>{{ olympiad.title }}</span>
+        </div>
+        <h1>{{ olympiad.title }}</h1>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="detail-layout">
+            <div class="detail-main">
+                <div class="detail-card">
+                    <div class="detail-icon">
+                        {% if olympiad.subject == 'Matematika' %}<i class="fas fa-calculator"></i>
+                        {% elif olympiad.subject == 'Fizika' %}<i class="fas fa-atom"></i>
+                        {% elif olympiad.subject == 'Kimyo' %}<i class="fas fa-flask"></i>
+                        {% elif olympiad.subject == 'Biologiya' %}<i class="fas fa-dna"></i>
+                        {% elif olympiad.subject == 'Informatika' %}<i class="fas fa-laptop-code"></i>
+                        {% else %}<i class="fas fa-book"></i>{% endif %}
+                    </div>
+                    <div class="card-badge badge-{{ olympiad.status }} badge-lg">
+                        {% if olympiad.status == 'active' %}🟢 Faol (Olimpiada davom etmoqda)
+                        {% elif olympiad.status == 'upcoming' %}🟡 Kutilmoqda
+                        {% else %}🔴 Tugagan{% endif %}
+                    </div>
+                    <h2>{{ olympiad.title }}</h2>
+                    <p class="detail-desc">{{ olympiad.description }}</p>
+
+                    <div style="margin-top: 1.5rem; padding: 1.2rem; background: #f1f5f9; border-radius: 12px;">
+                        <h4 style="margin-bottom: 0.5rem; color: #1e293b;"><i class="fas fa-clipboard-check"></i> Test Haqida:</h4>
+                        <p style="margin: 0; font-size: 0.9rem; color: #475569;">
+                            Ushbu olimpiadada jami <strong>{{ olympiad.questions|length if olympiad.questions else 0 }} ta</strong> test savollari mavjud.
+                            Natijangiz testni tugatishingiz bilanoq hisoblanadi va admin panelga hamda @javohircoder0 ga yuboriladi.
+                        </p>
+                    </div>
+
+                    {% if olympiad.status == 'active' %}
+                    <div class="register-cta" style="margin-top: 2rem;">
+                        {% if session.get('user_id') %}
+                            {% if olympiad.questions and olympiad.questions|length > 0 %}
+                            <a href="{{ url_for('solve_olympiad', oid=olympiad.id) }}" class="btn btn-primary btn-lg" style="box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);">
+                                <i class="fas fa-play-circle"></i> Olimpiadani Boshlash (Savollarni Yechish)
+                            </a>
+                            {% else %}
+                            <button class="btn btn-outline btn-lg" disabled style="opacity: 0.7; cursor: not-allowed;">
+                                <i class="fas fa-clock"></i> Savollar tez orada yuklanadi
+                            </button>
+                            {% endif %}
+                        {% else %}
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt"></i> Testni yechish uchun tizimga kiring
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div style="margin-top: 2rem;">
+                        <p style="color: #64748b;"><i class="fas fa-info-circle"></i> Ushbu olimpiada hozirda topshirish uchun yopiq.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="detail-sidebar">
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Olimpiad Ma'lumotlari</h3>
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-book"></i> Fan:</span>
+                        <span class="info-value">{{ olympiad.subject }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-layer-group"></i> Daraja:</span>
+                        <span class="info-value">{{ olympiad.level }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-calendar"></i> Sana:</span>
+                        <span class="info-value">{{ olympiad.date }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-clock"></i> Ro'yxat muddati:</span>
+                        <span class="info-value">{{ olympiad.deadline }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-question-circle"></i> Savollar soni:</span>
+                        <span class="info-value">{{ olympiad.questions|length if olympiad.questions else 0 }} ta</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label"><i class="fas fa-users"></i> Ishtirokchilar:</span>
+                        <span class="info-value">{{ olympiad.participants }}</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3><i class="fas fa-award"></i> Mukofotlar</h3>
+                    <div class="prize-list">
+                        <div class="prize-item gold">
+                            <span>🥇 1-o'rin (90-100%)</span>
+                            <span>Oltin medal + Sertifikat</span>
+                        </div>
+                        <div class="prize-item silver">
+                            <span>🥈 2-o'rin (75-89%)</span>
+                            <span>Kumush medal + Sertifikat</span>
+                        </div>
+                        <div class="prize-item bronze">
+                            <span>🥉 3-o'rin (60-74%)</span>
+                            <span>Bronza medal + Sertifikat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

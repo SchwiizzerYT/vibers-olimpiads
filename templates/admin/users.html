@@ -1,0 +1,43 @@
+{% extends 'admin/base.html' %}
+{% block title %}Foydalanuvchilar{% endblock %}
+{% block breadcrumb %} / Foydalanuvchilar{% endblock %}
+{% block content %}
+<div class="page-title">
+    <h1><i class="fas fa-users"></i> Foydalanuvchilar</h1>
+</div>
+<div class="admin-card">
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th><th>Ism</th><th>Username</th><th>Email</th><th>Rol</th><th>Sana</th><th>Amal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td><strong>{{ u.full_name }}</strong></td>
+                    <td><code>{{ u.username }}</code></td>
+                    <td>{{ u.email }}</td>
+                    <td>
+                        {% if u.role == 'admin' %}<span class="badge-admin">Admin</span>
+                        {% else %}<span class="badge-user">Foydalanuvchi</span>{% endif %}
+                    </td>
+                    <td>{{ u.created_at }}</td>
+                    <td>
+                        {% if u.role != 'admin' %}
+                        <form method="POST" action="{{ url_for('admin_delete_user', uid=u.id) }}" onsubmit="return confirm('O\'chirish?')">
+                            <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
+                        {% else %}
+                        <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

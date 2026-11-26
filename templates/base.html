@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vibers Olimpiads{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo">
+                <i class="fas fa-trophy"></i>
+                <span>Vibers <strong>Olimpiads</strong></span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+                    <i class="fas fa-home"></i> Bosh sahifa
+                </a>
+                <a href="{{ url_for('olympiads') }}" class="nav-link {% if request.endpoint == 'olympiads' %}active{% endif %}">
+                    <i class="fas fa-medal"></i> Olimpiadalar
+                </a>
+                <a href="{{ url_for('results') }}" class="nav-link {% if request.endpoint == 'results' %}active{% endif %}">
+                    <i class="fas fa-chart-bar"></i> Natijalar
+                </a>
+                <a href="{{ url_for('news') }}" class="nav-link {% if request.endpoint == 'news' %}active{% endif %}">
+                    <i class="fas fa-newspaper"></i> Yangiliklar
+                </a>
+            </div>
+            <div class="nav-auth">
+                {% if session.get('user_id') %}
+                    {% if session.get('role') == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-admin">
+                        <i class="fas fa-cog"></i> Admin Panel
+                    </a>
+                    {% endif %}
+                    <div class="user-menu">
+                        <button class="user-btn">
+                            <i class="fas fa-user-circle"></i>
+                            {{ session.get('full_name', 'Foydalanuvchi') }}
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-dropdown">
+                            <a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profil</a>
+                            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Chiqish</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline">Kirish</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Ro'yxatdan o'tish</a>
+                {% endif %}
+            </div>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'danger' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+                {{ message }}
+                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="{{ url_for('index') }}" class="footer-logo">
+                    <i class="fas fa-trophy"></i> Vibers Olimpiads
+                </a>
+                <p>O'zbekiston o'quvchilari uchun eng yaxshi olimpiad platformasi</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Tezkor havolalar</h4>
+                <a href="{{ url_for('olympiads') }}">Olimpiadalar</a>
+                <a href="{{ url_for('results') }}">Natijalar</a>
+                <a href="{{ url_for('news') }}">Yangiliklar</a>
+                <a href="{{ url_for('register') }}">Ro'yxatdan o'tish</a>
+            </div>
+            <div class="footer-links">
+                <h4>Fanlar</h4>
+                <a href="{{ url_for('olympiads') }}?subject=Matematika">Matematika</a>
+                <a href="{{ url_for('olympiads') }}?subject=Fizika">Fizika</a>
+                <a href="{{ url_for('olympiads') }}?subject=Kimyo">Kimyo</a>
+                <a href="{{ url_for('olympiads') }}?subject=Informatika">Informatika</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Aloqa</h4>
+                <p><i class="fas fa-envelope"></i> info@vibers.uz</p>
+                <p><i class="fas fa-phone"></i> +998 90 000 00 00</p>
+                <p><i class="fas fa-map-marker-alt"></i> Toshkent, O'zbekiston</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Vibers Olimpiads. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

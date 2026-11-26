@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "username": "admin_1336",
+    "password": "1234recource1234",
+    "role": "admin",
+    "full_name": "Administrator",
+    "email": "admin@vibers.uz",
+    "created_at": "2024-01-01"
+  },
+  {
+    "id": 2,
+    "username": "boq",
+    "password": "boqiddish",
+    "role": "user",
+    "full_name": "Boqiddish",
+    "email": "boqiddish@boq.com",
+    "created_at": "2026-11-25"
+  }
+]

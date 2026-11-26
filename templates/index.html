@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% block title %}Bosh sahifa - Vibers Olimpiads{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-bg">
+        <div class="hero-shape shape-1"></div>
+        <div class="hero-shape shape-2"></div>
+        <div class="hero-shape shape-3"></div>
+    </div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge">🏆 O'zbekistonning #1 Olimpiad Platformasi</div>
+            <h1 class="hero-title">
+                Bilimingizni <span class="gradient-text">Olimpiadlarda</span> Sinab Ko'ring!
+            </h1>
+            <p class="hero-desc">
+                Vibers Olimpiads — o'quvchilar uchun eng katta olimpiad platformasi. 
+                Matematika, fizika, kimyo, biologiya va boshqa fanlar bo'yicha musobaqalarda ishtirok eting.
+            </p>
+            <div class="hero-btns">
+                <a href="{{ url_for('olympiads') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket"></i> Olimpiadlarni Ko'rish
+                </a>
+                {% if not session.get('user_id') %}
+                <a href="{{ url_for('register') }}" class="btn btn-outline-white btn-lg">
+                    <i class="fas fa-user-plus"></i> Ro'yxatdan O'tish
+                </a>
+                {% endif %}
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <strong>500+</strong>
+                    <span>Olimpiadlar</span>
+                </div>
+                <div class="stat-item">
+                    <strong>10,000+</strong>
+                    <span>O'quvchilar</span>
+                </div>
+                <div class="stat-item">
+                    <strong>14</strong>
+                    <span>Viloyatlar</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-card-float card-1">
+                <i class="fas fa-calculator"></i>
+                <span>Matematika</span>
+            </div>
+            <div class="hero-card-float card-2">
+                <i class="fas fa-atom"></i>
+                <span>Fizika</span>
+            </div>
+            <div class="hero-card-float card-3">
+                <i class="fas fa-laptop-code"></i>
+                <span>Informatika</span>
+            </div>
+            <div class="hero-trophy">
+                <i class="fas fa-trophy"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+    <div class="stats-container">
+        <div class="stats-item">
+            <i class="fas fa-medal"></i>
+            <div>
+                <strong>Respublika</strong>
+                <span>Olimpiadalar</span>
+            </div>
+        </div>
+        <div class="stats-item">
+            <i class="fas fa-globe"></i>
+            <div>
+                <strong>Xalqaro</strong>
+                <span>Musobaqalar</span>
+            </div>
+        </div>
+        <div class="stats-item">
+            <i class="fas fa-certificate"></i>
+            <div>
+                <strong>Sertifikatlar</strong>
+                <span>Ishtirokchilar uchun</span>
+            </div>
+        </div>
+        <div class="stats-item">
+            <i class="fas fa-gift"></i>
+            <div>
+                <strong>Sovrinlar</strong>
+                <span>G'oliblar uchun</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Active Olympiads -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Faol Olimpiadalar</h2>
+            <p>Hozir ro'yxatdan o'tishingiz mumkin bo'lgan olimpiadalar</p>
+            <a href="{{ url_for('olympiads') }}" class="btn btn-outline">Hammasini ko'rish <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="olympiad-grid">
+            {% if olympiads %}
+                {% for o in olympiads %}
+                <div class="olympiad-card" data-aos="fade-up">
+                    <div class="card-badge badge-{{ o.status }}">
+                        {% if o.status == 'active' %}Faol{% elif o.status == 'upcoming' %}Kutilmoqda{% else %}Tugagan{% endif %}
+                    </div>
+                    <div class="card-icon">
+                        {% if o.subject == 'Matematika' %}<i class="fas fa-calculator"></i>
+                        {% elif o.subject == 'Fizika' %}<i class="fas fa-atom"></i>
+                        {% elif o.subject == 'Kimyo' %}<i class="fas fa-flask"></i>
+                        {% elif o.subject == 'Biologiya' %}<i class="fas fa-dna"></i>
+                        {% elif o.subject == 'Informatika' %}<i class="fas fa-laptop-code"></i>
+                        {% else %}<i class="fas fa-book"></i>{% endif %}
+                    </div>
+                    <h3 class="card-title">{{ o.title }}</h3>
+                    <div class="card-meta">
+                        <span><i class="fas fa-layer-group"></i> {{ o.level }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ o.date }}</span>
+                    </div>
+                    <p class="card-desc">{{ o.description[:100] }}...</p>
+                    <a href="{{ url_for('olympiad_detail', oid=o.id) }}" class="btn btn-primary btn-sm">
+                        Batafsil <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Hozircha faol olimpiadalar yo'q</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Nima uchun Vibers Olimpiads?</h2>
+            <p>Bizning platformamizning afzalliklari</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon bg-blue">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Ishonchli Platforma</h3>
+                <p>Barcha ma'lumotlar xavfsiz saqlanadi va natijalar shaffof e'lon qilinadi</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon bg-green">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Real Vaqt Natijalar</h3>
+                <p>Olimpiad natijalarini real vaqtda kuzatib boring</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon bg-orange">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Qulay Interfeys</h3>
+                <p>Mobil va kompyuterdan qulay foydalanish imkoniyati</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon bg-purple">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Rasmiy Sertifikat</h3>
+                <p>Har bir ishtirokchi uchun rasmiy sertifikat beriladi</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News -->
+<section class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>So'nggi Yangiliklar</h2>
+            <p>Olimpiadlar haqida eng so'nggi xabarlar</p>
+            <a href="{{ url_for('news') }}" class="btn btn-outline">Hammasini ko'rish <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="news-grid">
+            {% for n in news %}
+            <div class="news-card">
+                <div class="news-date">
+                    <i class="fas fa-calendar-alt"></i> {{ n.date }}
+                </div>
+                <h3>{{ n.title }}</h3>
+                <p>{{ n.content[:150] }}...</p>
+                <div class="news-author">
+                    <i class="fas fa-user"></i> {{ n.author }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Hoziroq Boshlang!</h2>
+            <p>Minglab o'quvchilar bilan birga olimpiadlarda ishtirok eting va o'z bilimingizni namoyish qiling</p>
+            {% if not session.get('user_id') %}
+            <div class="cta-btns">
+                <a href="{{ url_for('register') }}" class="btn btn-white btn-lg">
+                    <i class="fas fa-user-plus"></i> Ro'yxatdan O'tish
+                </a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-white btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Kirish
+                </a>
+            </div>
+            {% else %}
+            <a href="{{ url_for('olympiads') }}" class="btn btn-white btn-lg">
+                <i class="fas fa-search"></i> Olimpiadlarni Ko'rish
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

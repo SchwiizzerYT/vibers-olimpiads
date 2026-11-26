@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "title": "Matematika Olimpiadasi",
+    "subject": "Matematika",
+    "level": "Respublika",
+    "date": "2024-03-15",
+    "deadline": "2024-03-01",
+    "description": "Respublika matematika olimpiadasi 7-11 sinf o'quvchilari uchun",
+    "status": "active",
+    "participants": 17,
+    "image": "math.png",
+    "questions": [
+      {
+        "id": 1,
+        "question": "2x + 6 = 14 bo'lsa, x ning qiymatini toping:",
+        "option_a": "3",
+        "option_b": "4",
+        "option_c": "5",
+        "option_d": "6",
+        "correct_option": "B",
+        "points": 5
+      },
+      {
+        "id": 2,
+        "question": "Uchburchakning ichki burchaklari yig'indisi necha gradusga teng?",
+        "option_a": "90°",
+        "option_b": "180°",
+        "option_c": "270°",
+        "option_d": "360°",
+        "correct_option": "B",
+        "points": 5
+      },
+      {
+        "id": 3,
+        "question": "15 ning kvadratini toping (15²):",
+        "option_a": "125",
+        "option_b": "205",
+        "option_c": "225",
+        "option_d": "250",
+        "correct_option": "C",
+        "points": 5
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Fizika Olimpiadasi",
+    "subject": "Fizika",
+    "level": "Viloyat",
+    "date": "2024-03-20",
+    "deadline": "2024-03-05",
+    "description": "Viloyat fizika olimpiadasi 9-11 sinf o'quvchilari uchun",
+    "status": "active",
+    "participants": 9,
+    "image": "physics.png",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Nyutonning 2-qonuni formulasi qaysi?",
+        "option_a": "F = m * a",
+        "option_b": "E = mc²",
+        "option_c": "P = F / S",
+        "option_d": "v = s / t",
+        "correct_option": "A",
+        "points": 5
+      },
+      {
+        "id": 2,
+        "question": "Yorug'likning vakuumdagi tezligi taxminan qanchaga teng?",
+        "option_a": "300 000 km/s",
+        "option_b": "150 000 km/s",
+        "option_c": "30 000 km/s",
+        "option_d": "1 000 km/s",
+        "correct_option": "A",
+        "points": 5
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Informatika Olimpiadasi",
+    "subject": "Informatika",
+    "level": "Xalqaro",
+    "date": "2024-04-10",
+    "deadline": "2024-03-20",
+    "description": "Xalqaro informatika olimpiadasi barcha sinf o'quvchilari uchun",
+    "status": "upcoming",
+    "participants": 0,
+    "image": "it.png",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Python dasturlash tilida ma'lumot turini aniqlash uchun qaysi funksiya ishlatiladi?",
+        "option_a": "typeof()",
+        "option_b": "type()",
+        "option_c": "check()",
+        "option_d": "var_dump()",
+        "correct_option": "B",
+        "points": 5
+      }
+    ]
+  }
+]

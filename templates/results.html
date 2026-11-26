@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Natijalar - Vibers Olimpiads{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-chart-bar"></i> Olimpiad Natijalari</h1>
+        <p>Barcha olimpiadalarning rasmiy natijalari va eng yuqori ball to'plagan ishtirokchilar</p>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        {% if results %}
+        <div class="table-responsive" style="background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ishtirokchi</th>
+                        <th>Maktab / Tashkilot</th>
+                        <th>Olimpiada</th>
+                        <th>Natija</th>
+                        <th>Ball</th>
+                        <th>O'rin</th>
+                        <th>Sana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in results %}
+                    <tr>
+                        <td><strong>{{ loop.index }}</strong></td>
+                        <td><strong style="color: #1e293b;">{{ r.participant_name }}</strong></td>
+                        <td>{{ r.school }}</td>
+                        <td><span style="color: #4f46e5; font-weight: 600;">{{ r.olympiad_title }}</span></td>
+                        <td>
+                            {% if r.total_questions %}
+                            <span>{{ r.correct_count }} / {{ r.total_questions }} ta</span>
+                            <small style="color: #64748b;">({{ r.percentage }}%)</small>
+                            {% else %}
+                            <span>-</span>
+                            {% endif %}
+                        </td>
+                        <td><strong style="color: #10b981;">{{ r.score }}</strong></td>
+                        <td>
+                            {% if r.place == 1 %}<span class="place gold">🥇 1-o'rin</span>
+                            {% elif r.place == 2 %}<span class="place silver">🥈 2-o'rin</span>
+                            {% elif r.place == 3 %}<span class="place bronze">🥉 3-o'rin</span>
+                            {% else %}<span class="place normal">{{ r.place }}-o'rin</span>{% endif %}
+                        </td>
+                        <td><small style="color: #64748b;">{{ r.date }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-chart-bar"></i>
+            <h3>Natijalar hali mavjud emas</h3>
+            <p>Olimpiadada qatnashing va birinchi bo'lib natijangizni e'lon qiling!</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="{{ url_for('olympiads') }}" class="btn btn-primary">Olimpiadalar ro'yxatiga o'tish</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
